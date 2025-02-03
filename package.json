@@ -2,9 +2,9 @@
   "name": "mockaroo",
   "version": "1.0.0",
   "description": "HTTP Mock 服务器",
-  "main": "src/index.js",
+  "main": "src/mockaroo.js",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/mockaroo.js"
   },
   "dependencies": {
     "express": "^4.18.2",
