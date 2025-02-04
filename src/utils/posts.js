@@ -31,23 +31,46 @@ function generateRandomContent() {
     return contentParagraphs.join('\n\n');
 }
 
-// 生成单个文章
-function generatePost(id) {
-    const title = `${getRandomElement(titlePrefixes)}${getRandomElement(topics)}`;
-    const content = generateRandomContent();
+function generatePost(idOrData) {
+    let id, inputData = {};
 
-    return {
+    // 判断传入的是 ID 还是数据对象
+    if (typeof idOrData === 'object') {
+        id = idOrData.id || Math.floor(Math.random() * 10000) + 1;
+        inputData = idOrData;
+    }
+    else {
+        id = idOrData || Math.floor(Math.random() * 10000) + 1;
+    }
+
+    // 生成基础数据
+    const baseContent = inputData.content || generateRandomContent();
+    const baseData = {
         id,
         author: getRandomElement(names),
         date: generateRandomDate(),
-        title,
-        description: content.substring(0, 50) + '...',
-        content
+        title: `${getRandomElement(titlePrefixes)}${getRandomElement(topics)}`,
+        description: baseContent.substring(0, 50) + '...',
+        content: baseContent
+    };
+
+    // 合并传入的数据和基础数据，优先使用传入的数据
+    return {
+        ...baseData,
+        ...inputData,
+        // 确保 id 始终存在
+        id: id
     };
 }
 
-// 生成指定数量的文章
-function generatePosts(limit = 100) {
+function generatePosts(limitOrData = 100) {
+    // 如果传入的是数组，则使用数组中的数据生成文章
+    if (Array.isArray(limitOrData)) {
+        return limitOrData.map(data => generatePost(data));
+    }
+
+    // 如果传入的是数字，则生成指定数量的随机文章
+    const limit = typeof limitOrData === 'number' ? limitOrData : 100;
     const posts = [];
     for (let i = 1; i <= limit; i++) {
         posts.push(generatePost(i));

@@ -15,4 +15,9 @@ router.get('/:id', (req, res) => {
     res.json(generatePost(req.params.id));
 });
 
+// 创建文章
+router.post('/', (req, res) => {
+    res.json(generatePost(req.body));
+});
+
 module.exports = router;
