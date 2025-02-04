@@ -25,4 +25,9 @@ router.put('/:id', (req, res) => {
     res.json(generatePost(req.body));
 });
 
+// 删除文章
+router.delete('/:id', (req, res) => {
+    res.json(generatePost(req.params.id));
+});
+
 module.exports = router;
