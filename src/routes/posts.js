@@ -20,4 +20,9 @@ router.post('/', (req, res) => {
     res.json(generatePost(req.body));
 });
 
+// 更新文章
+router.put('/:id', (req, res) => {
+    res.json(generatePost(req.body));
+});
+
 module.exports = router;
