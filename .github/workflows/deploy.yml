@@ -1,0 +1,36 @@
+name: Deploy to Server
+
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          # 将代码复制到服务器
+          rsync -avz --delete ./ $SERVER_USER@$SERVER_IP:$DEPLOY_PATH
+          
+          # SSH 连接服务器并重启应用
+          ssh $SERVER_USER@$SERVER_IP "cd $DEPLOY_PATH && \
+            docker-compose down && \
+            docker-compose up -d --build"

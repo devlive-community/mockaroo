@@ -1,7 +1,7 @@
 {
   "name": "mockaroo",
-  "version": "1.0.0",
-  "description": "HTTP Mock 服务器",
+  "version": "2025.1.0",
+  "description": "一个轻量级的 HTTP Mock 服务器，用于快速构建模拟数据接口，适用于前端开发和接口测试场景。",
   "main": "src/mockaroo.js",
   "scripts": {
     "start": "nodemon src/mockaroo.js"
