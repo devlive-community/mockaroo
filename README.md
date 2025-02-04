@@ -20,6 +20,16 @@
 pnpm start
 ```
 
+## 支持的 HTTP 方法
+
+- GET
+- POST
+- PUT
+- DELETE
+- PATCH
+- OPTIONS
+- HEAD
+
 ## 贡献指南
 
 欢迎提交 Issue 和 Pull Request！在提交 PR 之前，请确保：
